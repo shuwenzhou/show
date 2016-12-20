@@ -1,0 +1,63 @@
+
+<h2 class="page-header" ng-bind="title"></h2>
+
+<div class="list-group">
+    <!-- 点击弹入下一个页面 ng-repeat -->
+    <div ng-repeat="movie in  movies" class="list-group-item">
+        <a href="#/detail/{{movie.id}}" style="color: #000; text-decoration: none" >
+            <div class="media">
+                <span class="badge pull-right" >{{movie.rating.average}}</span>
+                <div class="media-left">
+                    <img class="media-object img-thumbnail" ng-src="{{movie.images.small}}" alt="">
+                </div>
+                <div class="media-body">
+                    <h3 class="media-heading">{{movie.title}}</h3>
+                    <p class="">导演: <span ng-repeat="director in movie.directors">{{director.name}}{{$last? "":"、"}} </span></p>
+                    <!--<p class="">类型: <span ng-repeat="genre in movie.genres">{{genre}}</span></p>-->
+                    <p class="">类型: <span>{{movie.genres.join("、")}}</span></p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<!-- 3、底部 -->
+
+<!--<nav>-->
+    <!--<ul class="pager">-->
+        <!--<li><a href="#">Previous</a></li>-->
+        <!--<li><a href="#">Next</a></li>-->
+    <!--</ul>-->
+<!--</nav>-->
+
+<!-- 绑定当前页面 -->
+<uib-pager total-items="total" item-per-page="size" ng-model = "currentPage" align="false" style="display: block"
+        next-text="下一页" previous-text="上一页" >
+
+</uib-pager>
+
+<p>
+    <!--绑定页数-->
+    当前{{currentPage}}页 ，一共{{page}}页
+</p>
+
+<!-- 绑定当前加载情况 -->
+<div class="modal show" ng-hide="!loading" ng-class="{in:loading}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span>&times;</span> </button>
+                <h4 class="modal-title">正在加载</h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success progress-bar-striped active"
+                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" role="progressbar" style="width: 100%">
+                        <span class="sr-only">100%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

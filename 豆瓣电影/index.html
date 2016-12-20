@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>豆瓣电影</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="app.css">
+
+</head>
+<body ng-app="app">
+<!-- 导航栏 -->
+<nav class="nav navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <a href="#" class="navbar-brand "><strong>豆瓣</strong></a>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav nav-pills">
+                <li class="active"></li>
+                <!-- ####   标题绑定 navTitle ###-->
+                <li><a href="#">电影列表</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <!-- 左边列表-->
+        <div class="col-sm-3 col-md-2 fixed-left">
+            <ul class="nav nav-pills nav-stacked ">
+                <li class="active"><a href="#/in_theaters" select-link>正在热映</a></li>
+                <li><a href="#/coming_soon" select-link>即将上映</a></li>
+                <li><a href="#/top250" select-link>TOP250</a></li>
+            </ul>
+            <div class="input-group">
+                <input type="text" class="form-control text-center" placeholder="输入电影名" id="search"/>
+                <span class="input-group-addon" ><a href="">搜索</a></span>
+            </div>
+        </div>
+
+    </div>
+    <!--右边详情 -->
+    <!-- view 的挂载点-->
+    <div class="col-sm-10 col-md-9 col-sm-offset-3 col-md-offset-2" ng-view>
+    </div>
+</div>
+
+
+
+<script src="libs/angular/angular.min.js"></script>
+<!--<script src="libs/angular-bootstrap/ui-bootstrap.min.js"></script>-->
+<script src="libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="libs/angular-route/angular-route.min.js"></script>
+<script src="app.js"></script>
+<script src="movie/movie-list.js"></script>
+<script src="movie/movie-detail.js"></script>
+
+</body>
+</html>

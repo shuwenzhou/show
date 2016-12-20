@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>飞扬的小鸟</title>
+</head>
+<body onload="init()">
+    <P align="center">
+        <canvas style="background-color: aquamarine" width="400px" height="600px" id="canvas"></canvas>
+    </P>
+    <script type="text/javascript">
+        var context;
+        var cwidth = 400;
+        var cheight = 600;
+        var pipe_height = 150;
+
+        function Bg(x,y,width,height,src){
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            var image = new Image();
+            image.src = src;
+            this.image = image;
+            this.draw = bgDraw;
+        }
+        function TopPipe(x,y,width,height,src){
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            var image = new Image();
+            image.src = src;
+            this.image = image;
+            this.draw = topPipeDraw;
+        }
+        function BottomPipe(x,y,width,height,src){
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            var image = new Image();
+            image.src = src;
+            this.image = image;
+            this.draw = bottomPipeDraw;
+        }
+        function Bird(x,y,width,height){
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.draw = birdDraw;
+        }
+
+        function bgDraw(){
+            context.drawImage(this.image,this.x,this.y,this.width,this.height);
+        }
+        function topPipeDraw(){
+            context.drawImage(this.image,155,500,145,800,this.x,this.y,this.width,this.height);
+        }
+        function bottomPipeDraw(){
+            context.drawImage(this.image,0,470,145,800,this.x,this.y,this.width,this.height);
+        }
+        var i = 0;
+        function birdDraw(){
+            i++;
+            var src = "image/" + (i % 3) + ".gif";
+            var image = new Image();
+            image.src = src;
+            context.drawImage(image,this.x,this.y,this.width,this.height);
+        }
+
+        var bg = new Bg(0,0,cwidth,cheight,"image/bg.png");
+        var ground = new Bg(0,cheight - 50,cwidth,50,"image/ground.png");
+        var topPipe = new TopPipe(cwidth / 3,0,80,200,"image/pipe.png");
+        var bottomPipe = new BottomPipe(cwidth / 3,topPipe.height + pipe_height,80,350,"image/pipe.png");
+        var bird = new  Bird(cwidth / 9,200,42,32);
+
+        function drawALLElements(){
+            bg.draw();
+            ground.draw();
+            topPipe.draw();
+            bottomPipe.draw();
+            bird.draw();
+            cycleAction();
+
+        }
+
+        var speed = 5;
+        var gravity = 5;
+        var tib;
+        var score = 0;
+        var isOver = false;
+
+        function cycleAction(){
+            bird.y =bird.y + gravity;
+            topPipe.x = topPipe.x - speed;
+            bottomPipe.x = topPipe.x;
+            if(topPipe.x <= -topPipe.width){
+                topPipe.x = cwidth;
+                topPipe.height = Math.random() * 200 + 100;
+                pipe_height = Math.random() * 50 + 150;
+                bottomPipe.y = topPipe.height + pipe_height;
+                score++;
+                if(score <= 10){
+                    speed++;
+                    gravity = gravity + 0.4;
+                }
+                if(score > 10 && score <= 20){
+                    speed = speed + 0.3;
+                    gravity = 9;
+                }
+                if(score >20 && score <= 50){
+                    speed = speed + 0.1;
+                    gravity = 9;
+                }
+                if(score >50){
+                    speed = 20;
+                    gravity = 9;
+                }
+            }
+            var groundCondition = bird.y + bird.height >= ground.y;
+            var topPipeCondition = ((bird.x +bird.width >=topPipe.x)&&(bird.y <= topPipe.height)&&(bird.x <= topPipe.x + topPipe.width));
+            var bottomPipeCondition = ((bird.x +bird.width >=bottomPipe.x)&&(bird.y + bird.height >= bottomPipe.y)&&(bird.x <= bottomPipe.x + bottomPipe.width));
+            if(groundCondition || topPipeCondition ||bottomPipeCondition){
+                clearInterval(tib);
+                context.fillStyle = "red";
+                context.font = "25px,Accent";
+                context.fillText("恭喜你获得了" + score + "分",100,100);
+                isOver = true;
+            }
+        }
+
+        function keydown(a){
+            if(a.keyCode == 32){
+                bird.y = bird.y - 80;
+                if(bird.y <= 0){
+                    bird.y = 0;
+                }
+            }
+        }
+        function reAction(){
+            if(isOver){
+                window.location.reload();
+                isOver = false;
+            }
+        }
+        function init(){
+            var canvas = document.getElementById("canvas");
+            context = canvas.getContext("2d");
+            tib = setInterval("drawALLElements()",100);
+            document.onkeydown = keydown;
+            document.onclick = reAction;
+
+
+        }
+    </script>
+
+</body></html>

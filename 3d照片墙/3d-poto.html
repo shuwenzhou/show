@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        @keyframes boxrotate {
+            100% {
+                transform: rotateY(-360deg);
+            }
+        }
+        body {
+            transform-style: preserve-3d;
+        }
+        .boxs {
+            width: 300px;
+            margin: 200px auto;
+            transform-style: preserve-3d;
+            perspective: 2000px;
+            transform: rotateX(-6deg);
+        }
+        .box {
+            list-style: none;
+            transform-style: preserve-3d;
+            animation:boxrotate 20s ease-in-out infinite;
+            width: 200px;
+
+        }
+        img {
+            width: 300px;
+            height: 300px;
+            position: absolute;
+        }
+        img:nth-child(1){
+            transform: translateZ(370px);
+        }
+        img:nth-child(3){
+            transform: translateZ(-370px) rotateY(-180deg);
+        }
+        img:nth-child(2){
+            /*transform-origin: right;*/
+            transform:rotateY(135deg) translateZ(370px);
+        }
+        img:nth-child(4) {
+              /*transform-origin: right;*/
+              transform: rotateY(45deg) translateZ(370px);
+        }
+        img:nth-child(5) {
+            /*transform-origin: right;*/
+            transform: rotateY(90deg) translateZ(370px);
+        }
+        img:nth-child(6) {
+            /*transform-origin: left;*/
+            transform: rotateY(-45deg) translateZ(370px);
+        }
+        img:nth-child(7) {
+            /*transform-origin: left;*/
+            transform: rotateY(-90deg) translateZ(370px);
+        }
+        img:nth-child(8) {
+            /*transform-origin: left;*/
+            transform: rotateY(-135deg) translateZ(370px);
+        }
+    </style>
+</head>
+<body>
+<div class="boxs">
+    <div class="box">
+        <img src="./img/01.bmp" alt=""/>
+        <img src="./img/02.jpg" alt=""/>
+        <img src="./img/01.bmp" alt=""/>
+        <img src="./img/03.jpg" alt=""/>
+        <img src="./img/01.bmp" alt=""/>
+        <img src="./img/04.jpg" alt=""/>
+        <img src="./img/01.bmp" alt=""/>
+        <img src="./img/05.bmp" alt=""/>
+    </div>
+</div>
+</body>
+</html>
